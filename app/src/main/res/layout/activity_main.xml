@@ -254,4 +254,16 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/player_2"
         app:layout_constraintStart_toEndOf="@+id/player_2" />
 
+    <TextView
+        android:id="@+id/player_turn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="Turn: Player X"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintStart_toStartOf="@+id/guideline5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

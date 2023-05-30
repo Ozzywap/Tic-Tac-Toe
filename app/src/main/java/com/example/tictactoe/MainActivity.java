@@ -22,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
     View x9;
     Button reset;
     Button state;
-    TextView player1_score;
-    TextView player2_score;
+    TextView player1Score;
+    TextView player2Score;
+    TextView playerTurn;
     boolean player1Turn = true;
     public static final int EMPTY = 0;
     public static final int PLAYER_X = 1;
@@ -35,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        player1_score = findViewById(R.id.player_1_score);
-        player2_score = findViewById(R.id.player_2_score);
+        player1Score = findViewById(R.id.player_1_score);
+        player2Score = findViewById(R.id.player_2_score);
+        playerTurn = findViewById(R.id.player_turn);
         reset = findViewById(R.id.reset);
         x1 = findViewById(R.id.x1);
         x2 = findViewById(R.id.x2);
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reset();
+                resetGame();
             }
         });
 
@@ -217,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
     private boolean checkWin() {
         // Check rows
         for (int i = 0; i < gameBoard.length; i++) {
@@ -256,38 +260,47 @@ public class MainActivity extends AppCompatActivity {
             reset();
         }
 
+        setPlayerTurn();
 
         return false;
     }
 
-    void announceWinner(){
+    public void setPlayerTurn(){
+        if(player1Turn){
+            playerTurn.setText("Turn: Player X");
+        } else{
+            playerTurn.setText("Turn: Player O");
+        }
+    }
+
+    public void announceWinner(){
         if(!player1Turn) {
             Toast.makeText(getApplicationContext(), "Player 1 is the Winner", Toast.LENGTH_SHORT).show();
-            String scoreString = player1_score.getText().toString();
+            String scoreString = player1Score.getText().toString();
             int score = 0;
             if (scoreString.equals("0"))
                 score = 1;
             else
                 score = Integer.parseInt(scoreString) + 1;
 
-            player1_score.setText(score + "");
+            player1Score.setText(score + "");
 
         } else{
             Toast.makeText(getApplicationContext(), "Player 2 is the Winner", Toast.LENGTH_SHORT).show();
-            String scoreString = player2_score.getText().toString();
+            String scoreString = player2Score.getText().toString();
             int score = 0;
             if (scoreString.equals("0"))
                 score = 1;
             else
                 score = Integer.parseInt(scoreString) + 1;
 
-            player2_score.setText(score + "");
+            player2Score.setText(score + "");
         }
         reset();
     }
 
 
-    void reset(){
+    public void reset(){
         x1.setBackgroundColor(Color.WHITE);
         x2.setBackgroundColor(Color.WHITE);
         x3.setBackgroundColor(Color.WHITE);
@@ -313,6 +326,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         player1Turn = true;
+        setPlayerTurn();
 
+    }
+
+    public void resetGame(){
+        reset();
+        player1Score.setText("0");
+        player2Score.setText("0");
     }
 }
