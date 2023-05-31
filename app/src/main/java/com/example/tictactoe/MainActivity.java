@@ -75,137 +75,101 @@ public class MainActivity extends AppCompatActivity {
         x1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setView(x1);
                 if (player1Turn){
                     gameBoard[0][0] = PLAYER_X;
                 } else{
                     gameBoard[0][0] = PLAYER_O;
                 }
-                player1Turn = !player1Turn;
-                x1.setEnabled(false);
-                checkWin();
-
+                playNextTurn(x1);
             }
         });
 
         x2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setView(x2);
                 if (player1Turn){
                     gameBoard[0][1] = PLAYER_X;
                 } else{
                     gameBoard[0][1] = PLAYER_O;
                 }
-                player1Turn = !player1Turn;
-                x2.setEnabled(false);
-                checkWin();
-
+                playNextTurn(x2);
             }
         });
         x3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setView(x3);
                 if (player1Turn){
                     gameBoard[0][2] = PLAYER_X;
                 } else{
                     gameBoard[0][2] = PLAYER_O;
                 }
-                player1Turn = !player1Turn;
-                x3.setEnabled(false);
-                checkWin();
-
+                playNextTurn(x3);
             }
         });
         x4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setView(x4);
                 if (player1Turn){
                     gameBoard[1][0] = PLAYER_X;
                 } else{
                     gameBoard[1][0] = PLAYER_O;
                 }
-                player1Turn = !player1Turn;
-                x4.setEnabled(false);
-                checkWin();
-
+                playNextTurn(x4);
             }
         });
         x5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setView(x5);
                 if (player1Turn){
                     gameBoard[1][1] = PLAYER_X;
                 } else{
                     gameBoard[1][1] = PLAYER_O;
                 }
-                player1Turn = !player1Turn;
-                x5.setEnabled(false);
-                checkWin();
-
+                playNextTurn(x5);
             }
         });
         x6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setView(x6);
                 if (player1Turn){
                     gameBoard[1][2] = PLAYER_X;
                 } else{
                     gameBoard[1][2] = PLAYER_O;
                 }
-                player1Turn = !player1Turn;
-                x6.setEnabled(false);
-                checkWin();
-
+                playNextTurn(x6);
             }
         });
         x7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setView(x7);
                 if (player1Turn){
                     gameBoard[2][0] = PLAYER_X;
                 } else{
                     gameBoard[2][0] = PLAYER_O;
                 }
-                player1Turn = !player1Turn;
-                x7.setEnabled(false);
-                checkWin();
-
+                playNextTurn(x7);
             }
         });
         x8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setView(x8);
                 if (player1Turn){
                     gameBoard[2][1] = PLAYER_X;
                 } else{
                     gameBoard[2][1] = PLAYER_O;
                 }
-                player1Turn = !player1Turn;
-                x8.setEnabled(false);
-                checkWin();
-
+                playNextTurn(x8);
             }
         });
         x9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setView(x9);
                 if (player1Turn){
                     gameBoard[2][2] = PLAYER_X;
                 } else{
                     gameBoard[2][2] = PLAYER_O;
                 }
-                player1Turn = !player1Turn;
-                x9.setEnabled(false);
-                checkWin();
-
+                playNextTurn(x9);
             }
         });
 
@@ -214,13 +178,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-  void setView(TextView v){
+  void playNextTurn(TextView v){
       if(player1Turn){
           v.setText("X");
       } else{
           v.setText("O");
       }
+      player1Turn = !player1Turn;
+      v.setEnabled(false);
+      checkWin();
     }
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -278,8 +246,9 @@ public class MainActivity extends AppCompatActivity {
         boolean tie = true;
         for(int i = 0; i < gameBoard.length; i++){
             for(int j = 0; j < gameBoard.length; j++){
-                if(gameBoard[i][j] == EMPTY){
+                if (gameBoard[i][j] == EMPTY) {
                     tie = false;
+                    break;
                 }
             }
         }
