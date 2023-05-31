@@ -1,7 +1,9 @@
 package com.example.tictactoe;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -216,10 +218,41 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        if (savedInstanceState == null || savedInstanceState.isEmpty()){
+            reloadData();
+        }
     }
 
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("player1Score", player1Score.getText().toString());
+        outState.putString("player2Score", player2Score.getText().toString());
+    }
 
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        player1Score.setText(savedInstanceState.getString("player1Score", "-1"));
+        player2Score.setText(savedInstanceState.getString("player2Score", "-1"));
+    }
+
+
+    void saveState(){
+        SharedPreferences sp = getSharedPreferences("file1", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("player1Score", player1Score.getText().toString());
+        editor.putString("player2Score", player2Score.getText().toString());
+        editor.apply();
+    }
+
+    public void reloadData() {
+        SharedPreferences sp = getSharedPreferences("file1", MODE_PRIVATE);
+        player1Score.setText(sp.getString("player1Score", "-1"));
+        player2Score.setText(sp.getString("player2Score", "-1"));
+    }
 
     private boolean checkWin() {
         // Check rows
@@ -296,6 +329,7 @@ public class MainActivity extends AppCompatActivity {
 
             player2Score.setText(score + "");
         }
+        saveState();
         reset();
     }
 
@@ -331,8 +365,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void resetGame(){
-        reset();
         player1Score.setText("0");
         player2Score.setText("0");
+        saveState();
+        reset();
     }
 }
