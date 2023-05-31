@@ -234,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         player1Score.setText(savedInstanceState.getString("player1Score", "-1"));
         player2Score.setText(savedInstanceState.getString("player2Score", "-1"));
+    }
 
     void saveState(){
         SharedPreferences sp = getSharedPreferences("file1", MODE_PRIVATE);
