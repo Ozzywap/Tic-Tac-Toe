@@ -11,15 +11,15 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    View x1;
-    View x2;
-    View x3;
-    View x4;
-    View x5;
-    View x6;
-    View x7;
-    View x8;
-    View x9;
+    TextView x1;
+    TextView x2;
+    TextView x3;
+    TextView x4;
+    TextView x5;
+    TextView x6;
+    TextView x7;
+    TextView x8;
+    TextView x9;
     Button reset;
     Button state;
     TextView player1Score;
@@ -40,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
         player2Score = findViewById(R.id.player_2_score);
         playerTurn = findViewById(R.id.player_turn);
         reset = findViewById(R.id.reset);
-        x1 = findViewById(R.id.x1);
-        x2 = findViewById(R.id.x2);
-        x3 = findViewById(R.id.x3);
-        x4 = findViewById(R.id.x4);
-        x5 = findViewById(R.id.x5);
-        x6 = findViewById(R.id.x6);
-        x7 = findViewById(R.id.x7);
-        x8 = findViewById(R.id.x8);
-        x9 = findViewById(R.id.x9);
+        x1 = findViewById(R.id.text_view00);
+        x2 = findViewById(R.id.text_view01);
+        x3 = findViewById(R.id.text_view02);
+        x4 = findViewById(R.id.text_view10);
+        x5 = findViewById(R.id.text_view11);
+        x6 = findViewById(R.id.text_view12);
+        x7 = findViewById(R.id.text_view20);
+        x8 = findViewById(R.id.text_view21);
+        x9 = findViewById(R.id.text_view22);
         state = findViewById(R.id.state);
 
         state.setOnClickListener(new View.OnClickListener() {
@@ -74,11 +74,10 @@ public class MainActivity extends AppCompatActivity {
         x1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setView(x1);
                 if (player1Turn){
-                    x1.setBackgroundResource(R.drawable.x);
                     gameBoard[0][0] = PLAYER_X;
                 } else{
-                    x1.setBackgroundResource(R.drawable.o);
                     gameBoard[0][0] = PLAYER_O;
                 }
                 player1Turn = !player1Turn;
@@ -91,11 +90,10 @@ public class MainActivity extends AppCompatActivity {
         x2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setView(x2);
                 if (player1Turn){
-                    x2.setBackgroundResource(R.drawable.x);
                     gameBoard[0][1] = PLAYER_X;
                 } else{
-                    x2.setBackgroundResource(R.drawable.o);
                     gameBoard[0][1] = PLAYER_O;
                 }
                 player1Turn = !player1Turn;
@@ -107,11 +105,10 @@ public class MainActivity extends AppCompatActivity {
         x3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setView(x3);
                 if (player1Turn){
-                    x3.setBackgroundResource(R.drawable.x);
                     gameBoard[0][2] = PLAYER_X;
                 } else{
-                    x3.setBackgroundResource(R.drawable.o);
                     gameBoard[0][2] = PLAYER_O;
                 }
                 player1Turn = !player1Turn;
@@ -123,11 +120,10 @@ public class MainActivity extends AppCompatActivity {
         x4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setView(x4);
                 if (player1Turn){
-                    x4.setBackgroundResource(R.drawable.x);
                     gameBoard[1][0] = PLAYER_X;
                 } else{
-                    x4.setBackgroundResource(R.drawable.o);
                     gameBoard[1][0] = PLAYER_O;
                 }
                 player1Turn = !player1Turn;
@@ -139,11 +135,10 @@ public class MainActivity extends AppCompatActivity {
         x5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setView(x5);
                 if (player1Turn){
-                    x5.setBackgroundResource(R.drawable.x);
                     gameBoard[1][1] = PLAYER_X;
                 } else{
-                    x5.setBackgroundResource(R.drawable.o);
                     gameBoard[1][1] = PLAYER_O;
                 }
                 player1Turn = !player1Turn;
@@ -155,11 +150,10 @@ public class MainActivity extends AppCompatActivity {
         x6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setView(x6);
                 if (player1Turn){
-                    x6.setBackgroundResource(R.drawable.x);
                     gameBoard[1][2] = PLAYER_X;
                 } else{
-                    x6.setBackgroundResource(R.drawable.o);
                     gameBoard[1][2] = PLAYER_O;
                 }
                 player1Turn = !player1Turn;
@@ -171,11 +165,10 @@ public class MainActivity extends AppCompatActivity {
         x7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setView(x7);
                 if (player1Turn){
-                    x7.setBackgroundResource(R.drawable.x);
                     gameBoard[2][0] = PLAYER_X;
                 } else{
-                    x7.setBackgroundResource(R.drawable.o);
                     gameBoard[2][0] = PLAYER_O;
                 }
                 player1Turn = !player1Turn;
@@ -187,11 +180,10 @@ public class MainActivity extends AppCompatActivity {
         x8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setView(x8);
                 if (player1Turn){
-                    x8.setBackgroundResource(R.drawable.x);
                     gameBoard[2][1] = PLAYER_X;
                 } else{
-                    x8.setBackgroundResource(R.drawable.o);
                     gameBoard[2][1] = PLAYER_O;
                 }
                 player1Turn = !player1Turn;
@@ -203,11 +195,10 @@ public class MainActivity extends AppCompatActivity {
         x9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setView(x9);
                 if (player1Turn){
-                    x9.setBackgroundResource(R.drawable.x);
                     gameBoard[2][2] = PLAYER_X;
                 } else{
-                    x9.setBackgroundResource(R.drawable.o);
                     gameBoard[2][2] = PLAYER_O;
                 }
                 player1Turn = !player1Turn;
@@ -218,7 +209,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    void setView(TextView v){
+        if(player1Turn){
+            v.setText("X");
+        } else{
+            v.setText("O");
+        }
+    }
 
 
     private boolean checkWin() {
@@ -301,15 +298,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void reset(){
-        x1.setBackgroundColor(Color.WHITE);
-        x2.setBackgroundColor(Color.WHITE);
-        x3.setBackgroundColor(Color.WHITE);
-        x4.setBackgroundColor(Color.WHITE);
-        x5.setBackgroundColor(Color.WHITE);
-        x6.setBackgroundColor(Color.WHITE);
-        x7.setBackgroundColor(Color.WHITE);
-        x8.setBackgroundColor(Color.WHITE);
-        x9.setBackgroundColor(Color.WHITE);
+        x1.setText("");
+        x2.setText("");
+        x3.setText("");
+        x4.setText("");
+        x5.setText("");
+        x6.setText("");
+        x7.setText("");
+        x8.setText("");
+        x9.setText("");
         x1.setEnabled(true);
         x2.setEnabled(true);
         x3.setEnabled(true);
