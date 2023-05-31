@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -286,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (tie){
             Toast.makeText(getApplicationContext(), "Tie!", Toast.LENGTH_SHORT).show();
-            reset();
+            resetGameBoard();
         }
 
         setPlayerTurn();
@@ -326,11 +325,11 @@ public class MainActivity extends AppCompatActivity {
             player2Score.setText(score + "");
         }
         saveState();
-        reset();
+        resetGameBoard();
     }
 
 
-    public void reset(){
+    public void resetGameBoard(){
         x1.setText("");
         x2.setText("");
         x3.setText("");
@@ -364,6 +363,6 @@ public class MainActivity extends AppCompatActivity {
         player1Score.setText("0");
         player2Score.setText("0");
         saveState();
-        reset();
+        resetGameBoard();
     }
 }
