@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int EMPTY = 0;
     public static final int PLAYER_X = 1;
     public static final int PLAYER_O = 2;
-    private int[][] gameBoard = new int[3][3];
+    public int[][] gameBoard = new int[3][3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
       player1Turn = !player1Turn;
       v.setEnabled(false);
       checkWin();
+      setPlayerTurn();
     }
 
     @Override
@@ -217,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         player2Score.setText(sp.getString("player2Score", "-1"));
     }
 
-    private boolean checkWin() {
+    public boolean checkWin() {
         // Check rows
         for (int i = 0; i < gameBoard.length; i++) {
             if (gameBoard[i][0] != EMPTY && gameBoard[i][0] == gameBoard[i][1] && gameBoard[i][0] == gameBoard[i][2]) {
@@ -257,7 +258,6 @@ public class MainActivity extends AppCompatActivity {
             resetGameBoard();
         }
 
-        setPlayerTurn();
 
         return false;
     }
