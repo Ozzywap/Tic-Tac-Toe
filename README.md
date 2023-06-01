@@ -5,7 +5,8 @@
 ### Tech stack
 - Java
 - Gradle for dependency management
-- JUnit for testing
+- JUnit5 for testing
+- Roboelectric to run android-specific tests
 
 ## Preview
 
