@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView player2Score;
     TextView playerTurn;
     boolean player1Turn = true;
+    public int moveCounter;
     public static final int EMPTY = 0;
     public static final int PLAYER_X = 1;
     public static final int PLAYER_O = 2;
@@ -56,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String state = "";
-                for(int i = 0; i < gameBoard.length; i++){
-                        for(int j = 0; j < gameBoard.length; j++){
-                            state += gameBoard[i][j];
-                        }
+                for (int i = 0; i < gameBoard.length; i++) {
+                    for (int j = 0; j < gameBoard.length; j++) {
+                        state += gameBoard[i][j];
+                    }
                 }
                 Toast.makeText(getApplicationContext(), state, Toast.LENGTH_LONG).show();
             }
@@ -75,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
         x1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (player1Turn){
+                if (player1Turn) {
                     gameBoard[0][0] = PLAYER_X;
-                } else{
+                } else {
                     gameBoard[0][0] = PLAYER_O;
                 }
                 playNextTurn(x1);
@@ -87,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
         x2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (player1Turn){
+                if (player1Turn) {
                     gameBoard[0][1] = PLAYER_X;
-                } else{
+                } else {
                     gameBoard[0][1] = PLAYER_O;
                 }
                 playNextTurn(x2);
@@ -98,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
         x3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (player1Turn){
+                if (player1Turn) {
                     gameBoard[0][2] = PLAYER_X;
-                } else{
+                } else {
                     gameBoard[0][2] = PLAYER_O;
                 }
                 playNextTurn(x3);
@@ -109,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
         x4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (player1Turn){
+                if (player1Turn) {
                     gameBoard[1][0] = PLAYER_X;
-                } else{
+                } else {
                     gameBoard[1][0] = PLAYER_O;
                 }
                 playNextTurn(x4);
@@ -120,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
         x5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (player1Turn){
+                if (player1Turn) {
                     gameBoard[1][1] = PLAYER_X;
-                } else{
+                } else {
                     gameBoard[1][1] = PLAYER_O;
                 }
                 playNextTurn(x5);
@@ -131,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
         x6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (player1Turn){
+                if (player1Turn) {
                     gameBoard[1][2] = PLAYER_X;
-                } else{
+                } else {
                     gameBoard[1][2] = PLAYER_O;
                 }
                 playNextTurn(x6);
@@ -142,9 +143,9 @@ public class MainActivity extends AppCompatActivity {
         x7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (player1Turn){
+                if (player1Turn) {
                     gameBoard[2][0] = PLAYER_X;
-                } else{
+                } else {
                     gameBoard[2][0] = PLAYER_O;
                 }
                 playNextTurn(x7);
@@ -153,9 +154,9 @@ public class MainActivity extends AppCompatActivity {
         x8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (player1Turn){
+                if (player1Turn) {
                     gameBoard[2][1] = PLAYER_X;
-                } else{
+                } else {
                     gameBoard[2][1] = PLAYER_O;
                 }
                 playNextTurn(x8);
@@ -164,30 +165,43 @@ public class MainActivity extends AppCompatActivity {
         x9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (player1Turn){
+                if (player1Turn) {
                     gameBoard[2][2] = PLAYER_X;
-                } else{
+                } else {
                     gameBoard[2][2] = PLAYER_O;
                 }
                 playNextTurn(x9);
             }
         });
 
-        if (savedInstanceState == null || savedInstanceState.isEmpty()){
+        if (savedInstanceState == null || savedInstanceState.isEmpty()) {
             reloadData();
         }
     }
 
-  void playNextTurn(TextView v){
-      if(player1Turn){
-          v.setText("X");
-      } else{
-          v.setText("O");
-      }
-      player1Turn = !player1Turn;
-      v.setEnabled(false);
-      checkWin();
-      setPlayerTurn();
+    void playNextTurn(TextView v) {
+        if (player1Turn) {
+            v.setText("X");
+        } else {
+            v.setText("O");
+        }
+        player1Turn = !player1Turn;
+        v.setEnabled(false);
+        moveCounter++;
+        boolean win = checkWin();
+        if (win) {
+
+            announceWinner();
+
+        } else {
+            if (moveCounter == 9) {
+                playerTurn.setText("It's a tie!");
+                resetGameBoard();
+            } else {
+                setPlayerTurn();
+            }
+        }
+
     }
 
     @Override
@@ -204,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         player2Score.setText(savedInstanceState.getString("player2Score", "-1"));
     }
 
-    void saveState(){
+    void saveState() {
         SharedPreferences sp = getSharedPreferences("file1", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("player1Score", player1Score.getText().toString());
@@ -222,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
         // Check rows
         for (int i = 0; i < gameBoard.length; i++) {
             if (gameBoard[i][0] != EMPTY && gameBoard[i][0] == gameBoard[i][1] && gameBoard[i][0] == gameBoard[i][2]) {
-                announceWinner();
                 return true;
             }
         }
@@ -230,75 +243,49 @@ public class MainActivity extends AppCompatActivity {
         // Check columns
         for (int i = 0; i < gameBoard.length; i++) {
             if (gameBoard[0][i] != EMPTY && gameBoard[0][i] == gameBoard[1][i] && gameBoard[0][i] == gameBoard[2][i]) {
-                announceWinner();
                 return true;
             }
         }
 
         // Check diagonals
         if (gameBoard[0][0] != EMPTY && gameBoard[0][0] == gameBoard[1][1] && gameBoard[0][0] == gameBoard[2][2]) {
-            announceWinner();
             return true;
         }
         if (gameBoard[0][2] != EMPTY && gameBoard[0][2] == gameBoard[1][1] && gameBoard[0][2] == gameBoard[2][0]) {
-            announceWinner();
             return true;
         }
-        boolean tie = true;
-        for(int i = 0; i < gameBoard.length; i++){
-            for(int j = 0; j < gameBoard.length; j++){
-                if (gameBoard[i][j] == EMPTY) {
-                    tie = false;
-                    break;
-                }
-            }
-        }
-        if (tie){
-            Toast.makeText(getApplicationContext(), "Tie!", Toast.LENGTH_SHORT).show();
-            resetGameBoard();
-        }
-
 
         return false;
     }
 
-    public void setPlayerTurn(){
-        if(player1Turn){
+    public void setPlayerTurn() {
+        if (player1Turn) {
             playerTurn.setText("Turn: Player X");
-        } else{
+        } else {
             playerTurn.setText("Turn: Player O");
         }
     }
 
-    public void announceWinner(){
-        if(!player1Turn) {
-            Toast.makeText(getApplicationContext(), "Player 1 is the Winner", Toast.LENGTH_SHORT).show();
+    public void announceWinner() {
+        if (!player1Turn) {
+            playerTurn.setText("X wins!");
             String scoreString = player1Score.getText().toString();
-            int score = 0;
-            if (scoreString.equals("0"))
-                score = 1;
-            else
-                score = Integer.parseInt(scoreString) + 1;
-
+            int score = Integer.parseInt(scoreString) + 1;
             player1Score.setText(score + "");
 
-        } else{
-            Toast.makeText(getApplicationContext(), "Player 2 is the Winner", Toast.LENGTH_SHORT).show();
+        } else {
+            playerTurn.setText("O wins!");
             String scoreString = player2Score.getText().toString();
-            int score = 0;
-            if (scoreString.equals("0"))
-                score = 1;
-            else
-                score = Integer.parseInt(scoreString) + 1;
-
+            int score = Integer.parseInt(scoreString) + 1;
             player2Score.setText(score + "");
         }
+
         saveState();
         resetGameBoard();
     }
 
 
-    public void resetGameBoard(){
+    public void resetGameBoard() {
         x1.setText("");
         x2.setText("");
         x3.setText("");
@@ -318,17 +305,17 @@ public class MainActivity extends AppCompatActivity {
         x8.setEnabled(true);
         x9.setEnabled(true);
 
-        for(int i = 0; i < gameBoard.length; i++){
-            for(int j = 0; j < gameBoard.length; j++){
+        for (int i = 0; i < gameBoard.length; i++) {
+            for (int j = 0; j < gameBoard.length; j++) {
                 gameBoard[i][j] = 0;
             }
         }
+        moveCounter = 0;
         player1Turn = true;
-        setPlayerTurn();
 
     }
 
-    public void resetGame(){
+    public void resetGame() {
         player1Score.setText("0");
         player2Score.setText("0");
         saveState();
