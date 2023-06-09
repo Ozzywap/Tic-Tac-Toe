@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.gson.Gson;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     TextView x9;
     Button reset;
     Button state;
+    Button undo;
     TextView player1Score;
     TextView player2Score;
     TextView playerTurn;
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int PLAYER_X = 1;
     public static final int PLAYER_O = 2;
     public int[][] gameBoard = new int[3][3];
+    public Stack<int[][]> undoTracker = new Stack<>();
+    public Stack<TextView> undoTrackerView = new Stack<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,31 @@ public class MainActivity extends AppCompatActivity {
         x8 = findViewById(R.id.text_view21);
         x9 = findViewById(R.id.text_view22);
         state = findViewById(R.id.state);
+        undo = findViewById(R.id.undo_btn);
+
+        Gson gson = new Gson();
+        int[][] gameBoardState = gson.fromJson(gson.toJson(gameBoard), int[][].class);
+        undoTracker.push(gameBoardState);
+
+        undo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!(undoTracker.isEmpty())){
+                    player1Turn = !player1Turn;
+                    setPlayerTurn();
+                    moveCounter--;
+                    Gson gson = new Gson();
+                    undoTracker.pop();
+                    int[][] gameBoardState = gson.fromJson(gson.toJson(undoTracker.peek()), int[][].class);
+                    gameBoard = gameBoardState;
+                    TextView view = undoTrackerView.pop();
+                    view.setText("");
+                    view.setEnabled(true);
+                } else{
+                    resetGameBoard();
+                }
+            }
+        });
 
         state.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,12 +215,17 @@ public class MainActivity extends AppCompatActivity {
         } else {
             v.setText("O");
         }
+        undoTrackerView.add(v);
         player1Turn = !player1Turn;
         v.setEnabled(false);
         moveCounter++;
+        Gson gson = new Gson();
+        int[][] gameBoardState = gson.fromJson(gson.toJson(gameBoard), int[][].class);
+        undoTracker.push(gameBoardState);
         boolean win = checkWin();
         if (win) {
-
+            undoTracker.clear();
+            undoTrackerView.clear();
             announceWinner();
 
         } else {
@@ -318,6 +353,7 @@ public class MainActivity extends AppCompatActivity {
     public void resetGame() {
         player1Score.setText("0");
         player2Score.setText("0");
+        playerTurn.setText("Turn: Player X");
         saveState();
         resetGameBoard();
     }
